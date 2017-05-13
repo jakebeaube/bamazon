@@ -74,7 +74,7 @@ let buy = function(item){
 
         }
 
-        else {console.log ("We don't have the amount of " + res[0].productName)" you need.";
+        else {console.log ("We don't have that much " + res[0].productName);
         }
     });
 });
