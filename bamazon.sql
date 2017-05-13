@@ -1,0 +1,10 @@
+use bamazon_db;
+
+CREATE table Products(
+IDNumber INTEGER(30) AUTO_INCREMENT NOT NULL,
+Product VARCHAR(50) NOT NULL,
+Department VARCHAR(30) NOT NULL,
+Price DECIMAL(20,2) NOT NULL,
+OnHand INTEGER(30) NOT NULL,
+PRIMARY KEY(IDNumber)
+);
