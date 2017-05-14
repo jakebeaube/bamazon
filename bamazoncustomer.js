@@ -20,13 +20,13 @@ connection.connect(function(err) {
 // Starts app, lists all items for sale
 
 let inventory = function(){
-    connection.query("SELECT * FROM products", function(err, res){
+    connection.query("SELECT * FROM product_name", function(err, res){
     if(err) throw err;
-    console.log("\nItem ID : Product : Department : Price(USD) : OnHand");  
+    console.log("\nItem ID : Product : Department : Price(USD) : Amount on Hand");  
 
     
      for (i in res){
-        console.log(res[i].IDNumber + ": " + res[i].Product + " : " + res[i].Department + " : " + res[i].Price + " : " +res[i].OnHand);
+        console.log(res[i].item_id + ": " + res[i].product_name + " : " + res[i].department_name + " : " + res[i].price + " : " +res[i].stock_quantity);
      }
 
     
@@ -59,13 +59,13 @@ let buy = function(item){
             type:"input",
             message:"How many did you want?"
         }).then(function (answers) {
-        connection.query("SELECT * FROM products WHERE ?", { IDNumber: item}, function(err, res) {
+        connection.query("SELECT * FROM product_name WHERE ?", { item_id: item}, function(err, res) {
         if(err) throw err;
         
-        let isEnough = parseInt(res[0].OnHand) - parseInt(answers.select);
+        let isEnough = parseInt(res[0].stock_quantity) - parseInt(answers.select);
         if (isEnough >=0){
-            connection.query("UPDATE products SET ? WHERE ?", [{ OnHand: isEnough},
-            {IDNumber:item}],function(err, res) {
+            connection.query("UPDATE product_name SET ? WHERE ?", [{ stock_quantity: isEnough},
+            {item_id:item}],function(err, res) {
                 connection.end(function(err){
                     console.log("It's yours")
                 });
@@ -74,7 +74,7 @@ let buy = function(item){
 
         }
 
-        else {console.log ("We don't have that much " + res[0].productName);
+        else {console.log ("We don't have that much " + res[0].product_name);
         }
     });
 });
